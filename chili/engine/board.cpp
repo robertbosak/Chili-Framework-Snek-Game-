@@ -10,13 +10,13 @@ gfx(graphics)
 
 void Board::DrawCell(const Location &loc, Color c)
 {
-    assert(loc.x >= 0);
-    assert(loc.x < width);
-    assert(loc.y >= 0);
-    assert(loc.y < height);
+    assert(loc.x + boardOffsetX >= boardOffsetX);
+    assert(loc.x + boardOffsetX < (width * dimension) + boardOffsetX);
+    assert(loc.y + boardOffsetY >= boardOffsetY);
+    assert(loc.y + boardOffsetY < (height * dimension) + boardOffsetY);
     
     
-    gfx.drawRectDim(loc.x * dimension, loc.y * dimension, dimension - 1, dimension - 1, c);
+    gfx.drawRectDim(boardOffsetX + (loc.x * dimension), boardOffsetY + (loc.y * dimension), dimension - 1, dimension - 1, c);
 }
 
 bool Board::IsInsideBoard(const Location &loc) const
@@ -26,13 +26,13 @@ bool Board::IsInsideBoard(const Location &loc) const
 
 void Board::DrawBoarder(Graphics &gfx)
 {
-    for(int j = 0; j < height * dimension; ++j)
+    for(int j = boardOffsetY; j < (height * dimension) + boardOffsetY; ++j)
     {
-        for(int i = 0; i < width * dimension; ++i)
+        for(int i = boardOffsetX; i < (width * dimension) + boardOffsetX; ++i)
         {
-            if(i <= dimension || i > width * dimension - dimension)
+            if((i > boardOffsetX && i <= boardOffsetX + dimension) || (i < boardOffsetX + (width * dimension) && i > boardOffsetX + (width * dimension - dimension)))
                 gfx.PutPixel(i, j, 0, 0, 200);
-            else if(j <= dimension || j > height * dimension - dimension)
+            else if((j > boardOffsetY && j <= boardOffsetY + dimension) || (j < boardOffsetY + (height * dimension) && j > boardOffsetY + (height * dimension - dimension)))
                 gfx.PutPixel(i, j, 0, 0, 200);
         }
     }

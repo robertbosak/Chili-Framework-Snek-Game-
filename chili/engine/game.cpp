@@ -84,7 +84,7 @@ void Game::composeFrame()
 {
     if(!start)
     {
-        SpriteCodex::DrawTitle(brd.GetGridWidth(), brd.GetGridHeight(), gfx);
+        SpriteCodex::DrawTitle(((brd.GetGridWidth()/2) * 5) + Board::boardOffsetX, ((brd.GetGridHeight()/2) * 5) + Board::boardOffsetY, gfx);
 
         if(wnd.kbd.isPressed(wnd.getWindow(), GLFW_KEY_ENTER))
             start = true;
@@ -96,7 +96,7 @@ void Game::composeFrame()
         goal.Draw(brd);
         
         if(gameIsOver)
-            SpriteCodex::DrawGameOver(200, 200, gfx);
+            SpriteCodex::DrawGameOver(Board::boardOffsetX + ((brd.GetGridWidth()/2) * 7), Board::boardOffsetY + ((brd.GetGridHeight() / 2) * 7), gfx);
     }
 
 }
